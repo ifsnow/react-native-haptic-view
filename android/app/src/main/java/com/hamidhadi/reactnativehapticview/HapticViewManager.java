@@ -49,7 +49,7 @@ public class HapticViewManager extends ViewGroupManager<ReactViewGroup> {
 
                 try {
                     int feedbackConstantFromArgsValue = HapticFeedbackConstants.class.getField(feedbackConstantFromArgs).getInt(null);
-                    root.performHapticFeedback(feedbackConstantFromArgsValue);
+                    root.performHapticFeedback(feedbackConstantFromArgsValue, 2);
                 } catch (NoSuchFieldException e) {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
