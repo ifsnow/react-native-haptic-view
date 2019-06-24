@@ -46,10 +46,16 @@ public class HapticViewManager extends ViewGroupManager<ReactViewGroup> {
         switch(commandId) {
             case COMMAND_PERFORM_HAPTIC:
                 String feedbackConstantFromArgs = args.getString(0);
+                String feedbackFlagFromArgs = args.getString(1);
 
                 try {
                     int feedbackConstantFromArgsValue = HapticFeedbackConstants.class.getField(feedbackConstantFromArgs).getInt(null);
-                    root.performHapticFeedback(feedbackConstantFromArgsValue, 2);
+                    if (feedbackFlagFromArgs != null) {
+                        int feedbackFlagFromArgsValue = HapticFeedbackConstants.class.getField(feedbackFlagFromArgs).getInt(0);
+                        root.performHapticFeedback(feedbackConstantFromArgsValue, feedbackFlagFromArgsValue);    
+                    } else {
+                        root.performHapticFeedback(feedbackConstantFromArgsValue);
+                    }
                 } catch (NoSuchFieldException e) {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
