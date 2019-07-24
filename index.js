@@ -1,28 +1,6 @@
-import React, { Component } from 'react'
-import ReactNative, { requireNativeComponent, NativeModules, UIManager, Platform } from 'react-native'
-
-const NativeViewManager = NativeModules.HapticViewManager
-const NativeHapticView = requireNativeComponent('HapticView', null)
-
-class HapticView extends Component {
-  render() {
-    return (
-      <NativeHapticView {...this.props} />
-    )
-  }
-
-  performHaptic(params) {
-    if (Platform.OS === 'ios') {
-      NativeViewManager.performHaptic(ReactNative.findNodeHandle(this), params.ios)
-    } else if (Platform.OS === 'android') {
-      UIManager.dispatchViewManagerCommand(
-        ReactNative.findNodeHandle(this),
-        UIManager.HapticView.Commands.performHaptic,
-        [params.android, params.flag]
-      )
-    }
-  }
-}
+// @flow
+import HapticView from './HapticView';
+export default HapticView;
 
 export const HapticFeedbackConstants = {
   ios: {
@@ -48,5 +26,3 @@ export const HapticFeedbackConstants = {
     VIRTUAL_KEY_RELEASE: 'VIRTUAL_KEY_RELEASE',
   }
 }
-
-export default HapticView
