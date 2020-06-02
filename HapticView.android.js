@@ -2,19 +2,19 @@
 import React, { PureComponent } from 'react'
 import ReactNative from 'react-native'
 
-class HapticView extends PureComponent<{}> {
-  _NativeHapticView;
+const NativeHapticView = ReactNative.requireNativeComponent('HapticView');
 
+class HapticView extends PureComponent<{}> {
   _handle;
 
   _command;
 
-  render() {
-    if (!this._NativeHapticView) {
-      this._NativeHapticView = ReactNative.requireNativeComponent('HapticView');
-    }
+  componentWillUnmount() {
+    this._handle = null;
+  }
 
-    return <this._NativeHapticView />;
+  render() {
+    return <NativeHapticView />;
   }
 
   performHaptic(params: any) {
@@ -23,6 +23,10 @@ class HapticView extends PureComponent<{}> {
     if (!this._handle) {
       this._handle = ReactNative.findNodeHandle(this);
       this._command = UIManager.getViewManagerConfig('HapticView').Commands.performHaptic;
+    }
+
+    if (!this._handle || !this._command) {
+      return;
     }
 
     UIManager.dispatchViewManagerCommand(
